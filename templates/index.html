@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <script src="https://vk.com/js/api/openapi.js?162" type="text/javascript"></script>
+    <meta charset="UTF-8">
+    <title>Remote command UI</title>
+   <style>
+
+
+      .btn {
+	position: relative;
+    overflow: hidden;
+    z-index: 1;
+	padding: 10px 40px;
+	margin: 0 20px;
+	font-family: 'Montserrat Alternates', sans-serif;
+    font-weight: 600;
+    line-height: 30px;
+    color: white;
+    font-size: 15px;
+    text-transform: uppercase;
+	background: #f5b08f;
+	border-width: 0;
+    box-shadow: 5px 5px 0 #532831;
+	outline: none;
+	cursor: pointer;
+    transition: 1.5s;
+}
+.btn:before,
+.btn:after {
+	content: "";
+	position: absolute;
+    height: 200px;
+    left: -50%;
+    margin-top: -100px;
+    top: 50%;
+    width: 200px;
+	border-radius: 50%;
+    opacity: 0.3;
+    z-index: -1;
+    transform: scale(0);
+}
+.btn:before {
+	background: #ffeede;
+    transition: .8s ease-out;
+}
+.btn:after {
+    transition: .4s ease-in .3s;
+}
+.btn:hover {
+    color: #532831;
+}
+.btn:hover:before,
+.btn:hover:after{
+    opacity: 1;
+    transform: scale(4);
+}
+
+h1 {
+    font-family: 'Montserrat Alternates', sans-serif;
+    text-transform: uppercase;
+    background: #f5b08f;
+    color: white;
+    font-size: 30px;
+    padding: 10px 40px;
+    margin: 0 300px;
+
+   }
+
+      #footer {
+    position: fixed; /* Фиксированное положение */
+    left: 0; bottom: 0; /* Левый нижний угол */
+    padding: 10px; /* Поля вокруг текста */
+    background: #f5b08f; /* Цвет фона */
+    color: #fff; /* Цвет текста */
+    width: 100%; /* Ширина слоя */
+   }
+
+   </style>
+    <center><h1>  Генератор "смешных" анекдотов</h1></center>
+
+
+
+</head>
+
+<body>
+
+<style>
+    body {
+    background-image: url({{ url_for('static', filename='a.jpg') }});
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: 100%;
+}
+</style>
+
+
+<br><br>
+<form action="/rnn" method="POST">
+    <center>КОЛИЧЕСТВО АНЕКДОТОВ  &nbsp;<input name="text1" size = "25" placeholder="1"> </center>
+    <br>
+    <center>КОЛИЧЕСТВО БУКВ АНЕКДОТА &nbsp;<input name="text3" size = "25" placeholder="50"> </center>
+    <br>
+    <center>НАЧАЛО АНЕКДОТОВ&nbsp;&nbsp;&nbsp;<input name="text2" size = "31" placeholder="приходит мужик"> </center>
+    <br>
+    <!-- <center><input type="submit" style= "width:100x;height:75px" value="Rnn"></center-->
+
+
+    <center><button class="btn" type="submit" value="Rnn" style="width:150px;height:80px">
+       Создать анекдот
+    </button></center>
+</form>
+
+<br> <br> <br>
+{%if error == 0%}
+{%for item in for_print%}
+    <br>
+    <center><h1>{{item}}</h1></center>
+{% endfor %}
+
+{%endif%}
+{%if error == 1%}
+<center><h1 style="color:#ff0000"  >ВВЕДИТЕ КОЛИЧЕСТВО АНЕКДОТОВ</h1></center>
+{%endif%}
+{%if error == 2%}
+<center><h1 style="color:#ff0000"  >СЛИШКОМ МНОГО АНЕКДОТОВ</h1></center>
+{%endif%}
+{%if error == 3%}
+<center><h1 style="color:#ff0000"  >ВВЕДИТЕ ЦЕЛОЕ КОЛИЧЕСТВО БУКВ</h1></center>
+{%endif%}
+{%if error == 4%}
+<center><h1 style="color:#ff0000"  >СЛИШКОМ ДЛИННЫЙ АНЕКДОТ ХОЧЕШЬ</h1></center>
+{%endif%}
+{%if error == 5%}
+<center><h1 style="color:#ff0000"  >СЛИШКОМ ДЛИННОЕ НАЧАЛЬНОЕ СЛОВО</h1></center>
+{%endif%}
+
+<div id="footer">
+    &copy; <a href = "https://github.com/lemikhovalex/BJokeGenerator">BJokeGenerator</a>
+  </div>
+
+
+
+</body>
+</html>
+
+
